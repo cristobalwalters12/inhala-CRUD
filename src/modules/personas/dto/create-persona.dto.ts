@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsInt, IsPositive, IsString, MinLength } from 'class-validator';
 
 export class CreatePersonaDto {
