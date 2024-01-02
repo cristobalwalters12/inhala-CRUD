@@ -4,6 +4,7 @@ import { UpdatePersonaDto } from './dto/update-persona.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, isValidObjectId } from 'mongoose';
 import { Persona } from './entities/persona.entity';
+import { isNotEmpty } from 'class-validator';
 @Injectable()
 export class PersonasService {
   constructor(
@@ -18,13 +19,28 @@ export class PersonasService {
     }
   }
 
-  findAll() {
-    try {
-      const Personas = this.personaModel.find();
-      return Personas;
-    } catch (error) {
-      throw new BadRequestException('error al listar las personas');
+  async findAll(paginationDto?: any): Promise<any> {
+    if (isNotEmpty(paginationDto?.limit) && isNotEmpty(paginationDto?.page)) {
+      const skip: number =
+        Number(paginationDto.limit) * (Number(paginationDto.page) - 1);
+      const limit: number = Number(paginationDto.limit);
+      const result = await this.personaModel
+        .find()
+        .skip(skip)
+        .limit(limit)
+        .exec();
+      return {
+        data: result,
+        pagination: {
+          itemsPerPage: paginationDto.limit,
+          currentPage: paginationDto.page,
+        },
+      };
     }
+    const result = await this.personaModel.find().exec();
+    return {
+      data: result,
+    };
   }
 
   async findOne(term: string) {

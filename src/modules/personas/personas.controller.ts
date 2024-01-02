@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { PersonasService } from './personas.service';
 import { CreatePersonaDto } from './dto/create-persona.dto';
@@ -22,8 +23,8 @@ export class PersonasController {
   }
 
   @Get()
-  findAll() {
-    return this.personasService.findAll();
+  async findAll(@Query('page') page: number, @Query('limit') limit: number) {
+    return await this.personasService.findAll({ page: page, limit: limit });
   }
 
   @Get(':term')

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  inhala-crud:
+    build: # esto hace el build
+      context: . # la ruta donde esta el dockerfile
+      dockerfile: Dockerfile # el nombre del dockerfile
+    image: inhala-crud-docker # el nombre de la imagen
+    container_name: inhala-crud # el nombre del contenedor
+    restart: always # siempre que se reinicie el servidor, se reinicia el contenedor
+    env_file: # el archivo de variables de entorno
+      - ./src/config/env/.env # la ruta del archivo de variables de entorno
+
+  inhala-business: # el nombre del servicio
+    build: # esto hace el build
+      context: ../inhala-business # la ruta donde esta el dockerfile
+      dockerfile: Dockerfile # el nombre del dockerfile
+    image: inhala-business-docker # el nombre de la imagen
+    container_name: inhala-business # el nombre del contenedor
+    restart: always # siempre que se reinicie el servidor, se reinicia el contenedor
+    env_file: # el archivo de variables de entorno
+      - ../inhala-business/src/config/env/.env # la ruta del archivo de variables de entorno
