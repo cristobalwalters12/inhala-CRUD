@@ -4,13 +4,13 @@ import { Document } from 'mongoose';
 @Schema()
 export class Persona extends Document {
   @Prop({ required: true })
-  nombre: string;
+  name: string;
 
   @Prop({ required: true })
-  apellido: string;
+  lastName: string;
 
   @Prop({ required: true })
-  edad: number;
+  age: number;
 
   @Prop({ required: true })
   email: string;

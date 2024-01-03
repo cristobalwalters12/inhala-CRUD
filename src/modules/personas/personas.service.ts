@@ -50,7 +50,7 @@ export class PersonasService {
     }
     if (!persona) {
       persona = await this.personaModel.findOne({
-        nombre: term.toLowerCase(),
+        name: term.toLowerCase(),
       });
     }
     if (!persona) {
@@ -62,8 +62,8 @@ export class PersonasService {
   async update(id: string, updatePersonaDto: UpdatePersonaDto) {
     try {
       const persona = await this.findOne(id);
-      if (updatePersonaDto.nombre) {
-        updatePersonaDto.nombre = updatePersonaDto.nombre;
+      if (updatePersonaDto.name) {
+        updatePersonaDto.name = updatePersonaDto.name;
       }
       await persona.updateOne(updatePersonaDto);
       return { ...persona.toJSON(), ...updatePersonaDto };
